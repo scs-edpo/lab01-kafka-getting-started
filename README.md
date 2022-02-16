@@ -38,14 +38,14 @@ The first time you run this command, it will take a while to download the approp
 4. You can now see the topic that was just created with the `--list` flag:
 
   ```
-  $ docker-compose exec kafka /opt/kafka/bin/kafka-topics.sh --list --bootstrap-server kafka:9092
+  $ docker-compose exec kafka /opt/bitnamie/kafka/bin/kafka-topics.sh --list --bootstrap-server kafka:9092
   helloworld
   ```
 
 5. Normally you would use the Kafka API from within your application to produce messages but Kafka comes with a command line _producer_ client that can be used for testing purposes. Each line from standard input will be treated as a separate message. Type a few messages and leave the process running.
 
   ```
-  $ docker-compose exec kafka /opt/kafka/bin/kafka-console-producer.sh --broker-list kafka:9092 --topic helloworld
+  $ docker-compose exec kafka /opt/bitnami/kafka/bin/kafka-console-producer.sh --broker-list kafka:9092 --topic helloworld
   Hello world!
   Welcome to Kafka.
   ```
@@ -53,7 +53,7 @@ The first time you run this command, it will take a while to download the approp
 6. Open another terminal window in the lab directory. In this window, we can use Kafka's command line _consumer_ that will output the messages to standard out.
 
   ```
-  $ docker-compose exec kafka /opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server kafka:9092 --topic helloworld --from-beginning
+  $ docker-compose exec kafka /opt/bitnami/kafka/bin/kafka-console-consumer.sh --bootstrap-server kafka:9092 --topic helloworld --from-beginning
   Hello world!
   Welcome to Kafka.
   ```
@@ -89,18 +89,18 @@ bash-4.3#
 You are now running inside the container and all the commands should work (and autocomplete).
 
 Another alternative is to alias your commands. When we run the Kafka commands in the running docker image,
-we reach into the image and run a command in the directory `/opt/kafka/bin/`.
+we reach into the image and run a command in the directory `/opt/bitnami/kafka/bin/`.
 
-This means that all of our commands are preseeded with the following: `docker-compose exec kafka /opt/kafka/bin/`
+This means that all of our commands are preseeded with the following: `docker-compose exec kafka /opt/bitnami/kafka/bin/`
 
 You may want to alias these commands. In Linux and Mac, you can simply create aliases in your terminal setup.
 
 E.g., say you run bash, you can open the `~/.bash_profile` file with your favorite editor and enter something like this:
 
 ```
-  alias ktopics='docker-compose exec kafka /opt/kafka/bin/kafka-topics.sh'
-  alias kconsole-producer='docker-compose exec kafka /opt/kafka/bin/kafka-console-producer.sh'
-  alias kconsole-consumer='docker-compose exec kafka /opt/kafka/bin/kafka-console-consumer.sh'
+  alias ktopics='docker-compose exec kafka /opt/bitnami/kafka/bin/kafka-topics.sh'
+  alias kconsole-producer='docker-compose exec kafka /opt/bitnami/kafka/bin/kafka-console-producer.sh'
+  alias kconsole-consumer='docker-compose exec kafka /opt/bitnami/kafka/bin/kafka-console-consumer.sh'
 ```
 
 When you start new shells, you can now simply run:
