@@ -1,12 +1,15 @@
-version: '2'
+version: '3'
 services:
   zookeeper:
-    image: wurstmeister/zookeeper:3.4.6
+    image: bitnami/zookeeper:latest
+    environment:
+      ALLOW_ANONYMOUS_LOGIN: yes
   kafka:
-    image: wurstmeister/kafka:1.1.0
+    image: bitnami/kafka:latest
     environment:
       KAFKA_ADVERTISED_HOST_NAME: localhost
       KAFKA_ADVERTISED_PORT: 9092
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      ALLOW_PLAINTEXT_LISTENER: yes
     depends_on:
       - zookeeper
