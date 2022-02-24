@@ -38,7 +38,7 @@ The first time you run this command, it will take a while to download the approp
 4. You can now see the topic that was just created with the `--list` flag:
 
   ```
-  $ docker-compose exec kafka /opt/bitnamie/kafka/bin/kafka-topics.sh --list --bootstrap-server kafka:9092
+  $ docker-compose exec kafka /opt/bitnami/kafka/bin/kafka-topics.sh --list --bootstrap-server kafka:9092
   helloworld
   ```
 
