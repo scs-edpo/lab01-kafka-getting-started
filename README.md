@@ -86,6 +86,12 @@ $ docker-compose exec kafka /usr/bin/env bash
 bash-4.3#
 ```
 
+or simply use
+
+```bash
+$ docker-compose exec kafka /bin/bash
+```
+
 You are now running inside the container and all the commands should work (and autocomplete).
 
 Another alternative is to alias your commands. When we run the Kafka commands in the running docker image,
