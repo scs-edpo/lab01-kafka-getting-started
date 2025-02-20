@@ -11,11 +11,11 @@ This lab is adapted from [here](https://github.com/SciSpike/kafka-lab).
 3. Send some messages to the topic
 4. Start a consumer and retrieve the messages
 
-## Prerequisites
+## Prerequisitesdoc
 
 One of the easiest ways to get started with Kafka is through the use of [Docker](https://www.docker.com). 
 If you do not already have a version of Docker installed on your computer: [install Docker by following the directions appropriate for your operating system.](https://www.docker.com/products/overview) 
-Make sure that you can run both the `docker` and `docker-compose` command from the terminal.
+Make sure that you can run both the `docker` and `docker compose` command from the terminal.
 
 ## Instructions
 
@@ -24,7 +24,7 @@ Make sure that you can run both the `docker` and `docker-compose` command from t
 2. Start the Kafka and Zookeeper processes using Docker Compose:
 
   ```
-  $ docker-compose up
+  $ docker compose up
   ```
 
 The first time you run this command, it will take a while to download the appropriate Docker images.
@@ -32,20 +32,20 @@ The first time you run this command, it will take a while to download the approp
 3. Open an additional terminal window in the lab directory, `lab01-kafka-getting-started`. We are going to create a topic called `helloworld` with a single partition and one replica:
 
   ```
-  $ docker-compose exec kafka /opt/bitnami/kafka/bin/kafka-topics.sh --create --bootstrap-server 'kafka:9092' --replication-factor 1 --partitions 1 --topic 'helloworld'
+  $ docker compose exec kafka /opt/bitnami/kafka/bin/kafka-topics.sh --create --bootstrap-server 'kafka:9092' --replication-factor 1 --partitions 1 --topic 'helloworld'
   ```
 
 4. You can now see the topic that was just created with the `--list` flag:
 
   ```
-  $ docker-compose exec kafka /opt/bitnami/kafka/bin/kafka-topics.sh --list --bootstrap-server 'kafka:9092'
+  $ docker compose exec kafka /opt/bitnami/kafka/bin/kafka-topics.sh --list --bootstrap-server 'kafka:9092'
   helloworld
   ```
 
 5. Normally you would use the Kafka API from within your application to produce messages but Kafka comes with a command line _producer_ client that can be used for testing purposes. Each line from standard input will be treated as a separate message. Type a few messages and leave the process running.
 
   ```
-  $ docker-compose exec kafka /opt/bitnami/kafka/bin/kafka-console-producer.sh --broker-list 'kafka:9092' --topic 'helloworld'
+  $ docker compose exec kafka /opt/bitnami/kafka/bin/kafka-console-producer.sh --broker-list 'kafka:9092' --topic 'helloworld'
   Hello world!
   Welcome to Kafka.
   ```
@@ -53,7 +53,7 @@ The first time you run this command, it will take a while to download the approp
 6. Open another terminal window in the lab directory. In this window, we can use Kafka's command line _consumer_ that will output the messages to standard out.
 
   ```
-  $ docker-compose exec kafka /opt/bitnami/kafka/bin/kafka-console-consumer.sh --bootstrap-server 'kafka:9092' --topic 'helloworld' --from-beginning
+  $ docker compose exec kafka /opt/bitnami/kafka/bin/kafka-console-consumer.sh --bootstrap-server 'kafka:9092' --topic 'helloworld' --from-beginning
   Hello world!
   Welcome to Kafka.
   ```
@@ -65,7 +65,7 @@ The first time you run this command, it will take a while to download the approp
 9. Finally, stop the Kafka and Zookeeper servers with Docker Compose:
 
   ```
-  $ docker-compose down
+  $ docker compose down
   ```
 
 Congratulations, this lab is complete!
@@ -81,7 +81,7 @@ One way to make this simpler is to run a bash shell inside the Docker container.
 E.g.:
 
 ```bash
-$ docker-compose exec kafka /usr/bin/env bash
+$ docker compose exec kafka /usr/bin/env bash
 
 bash-4.3#
 ```
@@ -89,7 +89,7 @@ bash-4.3#
 or simply use
 
 ```bash
-$ docker-compose exec kafka /bin/bash
+$ docker compose exec kafka /bin/bash
 ```
 
 You are now running inside the container and all the commands should work (and autocomplete).
