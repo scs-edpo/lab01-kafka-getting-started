@@ -21,10 +21,10 @@ Make sure that you can run both the `docker` and `docker compose` command from t
 
 1. Open a terminal in this lab directory: `lab01-kafka-getting-started`.
 
-2. Start the Kafka and Zookeeper processes using Docker Compose:
+2. Start the Kafka processe using Docker Compose:
 
   ```
-  $ docker compose up
+  $ docker-compose up
   ```
 
 The first time you run this command, it will take a while to download the appropriate Docker images.
@@ -32,20 +32,20 @@ The first time you run this command, it will take a while to download the approp
 3. Open an additional terminal window in the lab directory, `lab01-kafka-getting-started`. We are going to create a topic called `helloworld` with a single partition and one replica:
 
   ```
-  $ docker compose exec kafka /opt/bitnami/kafka/bin/kafka-topics.sh --create --bootstrap-server 'kafka:9092' --replication-factor 1 --partitions 1 --topic 'helloworld'
+  $ docker-compose exec kafka kafka-topics --create --bootstrap-server 'kafka:9092' --replication-factor 1 --partitions 1 --topic 'helloworld'
   ```
 
 4. You can now see the topic that was just created with the `--list` flag:
 
   ```
-  $ docker compose exec kafka /opt/bitnami/kafka/bin/kafka-topics.sh --list --bootstrap-server 'kafka:9092'
+  $ docker-compose exec kafka kafka-topics --list --bootstrap-server 'kafka:9092'
   helloworld
   ```
 
 5. Normally you would use the Kafka API from within your application to produce messages but Kafka comes with a command line _producer_ client that can be used for testing purposes. Each line from standard input will be treated as a separate message. Type a few messages and leave the process running.
 
   ```
-  $ docker compose exec kafka /opt/bitnami/kafka/bin/kafka-console-producer.sh --broker-list 'kafka:9092' --topic 'helloworld'
+  $ docker-compose exec kafka kafka-console-producer --bootstrap-server 'kafka:9092' --topic 'helloworld'
   Hello world!
   Welcome to Kafka.
   ```
@@ -53,7 +53,7 @@ The first time you run this command, it will take a while to download the approp
 6. Open another terminal window in the lab directory. In this window, we can use Kafka's command line _consumer_ that will output the messages to standard out.
 
   ```
-  $ docker compose exec kafka /opt/bitnami/kafka/bin/kafka-console-consumer.sh --bootstrap-server 'kafka:9092' --topic 'helloworld' --from-beginning
+  $ docker-compose exec kafka kafka-console-consumer --bootstrap-server 'kafka:9092' --topic 'helloworld' --from-beginning
   Hello world!
   Welcome to Kafka.
   ```
@@ -62,61 +62,11 @@ The first time you run this command, it will take a while to download the approp
 
 8. Stop the producer and consumer terminals by issuing a **Ctrl-C**.
 
-9. Finally, stop the Kafka and Zookeeper servers with Docker Compose:
+9. Finally, stop Kafka server with Docker Compose:
 
   ```
-  $ docker compose down
+  $ docker-compose down
   ```
 
 Congratulations, this lab is complete!
 
-## [OPTIONAL] Alias
-
-Because we use docker and docker-compose, the commands to run the kafka command line are very long.
-
-We have all the commands listed in the exercise above, so you can simply copy and paste, but as you get more advanced, you may want to experiment with the CLI.
-
-One way to make this simpler is to run a bash shell inside the Docker container.
-
-E.g.:
-
-```bash
-$ docker compose exec kafka /usr/bin/env bash
-
-bash-4.3#
-```
-
-or simply use
-
-```bash
-$ docker compose exec kafka /bin/bash
-```
-
-You are now running inside the container and all the commands should work (and autocomplete).
-
-Another alternative is to alias your commands. When we run the Kafka commands in the running docker image,
-we reach into the image and run a command in the directory `/opt/bitnami/kafka/bin/`.
-
-This means that all of our commands are preseeded with the following: `docker-compose exec kafka /opt/bitnami/kafka/bin/`
-
-You may want to alias these commands. In Linux and Mac, you can simply create aliases in your terminal setup.
-
-E.g., say you run bash, you can open the `~/.bash_profile` file with your favorite editor and enter something like this:
-
-```
-  alias ktopics='docker-compose exec kafka /opt/bitnami/kafka/bin/kafka-topics.sh'
-  alias kconsole-producer='docker-compose exec kafka /opt/bitnami/kafka/bin/kafka-console-producer.sh'
-  alias kconsole-consumer='docker-compose exec kafka /opt/bitnami/kafka/bin/kafka-console-consumer.sh'
-```
-
-When you start new shells, you can now simply run:
-
-```bash
-  ktopics {OPTIONS} command
-```
-
-To update your current shell (so that you don't have to close your terminal and start a new one), run:
-
-```bash
-. ~/.bash_profile
-```
