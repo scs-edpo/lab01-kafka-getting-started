@@ -17,6 +17,18 @@ One of the easiest ways to get started with Kafka is through the use of [Docker]
 If you do not already have a version of Docker installed on your computer: [install Docker by following the directions appropriate for your operating system.](https://www.docker.com/products/overview) 
 Make sure that you can run both the `docker` and `docker compose` command from the terminal.
 
+## Docker Compose Configuration
+
+The `docker-compose.yml` file in this directory sets up a single-node Kafka cluster. Here is a breakdown of the configuration:
+
+- **Service**: `kafka` using the `confluentinc/cp-kafka:latest` image.
+- **Ports**: Exposes port `9092` to the host, allowing external clients to connect.
+- **Environment Variables**:
+  - `KAFKA_PROCESS_ROLES: broker,controller`: Configures the node to act as both a broker and a controller (KRaft mode).
+  - `KAFKA_LISTENERS`: Defines listeners for client traffic (`PLAINTEXT://:9092`) and internal controller communication (`CONTROLLER://:9093`).
+  - `KAFKA_ADVERTISED_LISTENERS`: Sets the address clients should use to connect (`PLAINTEXT://localhost:9092`).
+  - `KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1`: Sets replication factor to 1 since we are running a single node.
+
 ## Instructions
 
 1. Open a terminal in this lab directory: `lab01-kafka-getting-started`.
